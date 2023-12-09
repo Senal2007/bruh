@@ -1,8 +1,8 @@
 #Main interface (20231282-S.S.Rajendra)
 
-ongoing = [[] for _ in range(25)]
-onhold = [[] for _ in range(25)]
-completed = [[] for _ in range(25)]
+ongoing = [[] for _ in range(46)]
+onhold = [[] for _ in range(46)]
+completed = [[] for _ in range(46)]
 
 #List for the data entries
 projectEntry = []
@@ -66,14 +66,14 @@ def main():
 
   # 2nd figure ICW program
 
-def add_new_project():  # sourcery skip: remove-unreachable-code
+def add_new_project():  
   # Get the new project details from the user.
   print("\n----------------XYZ company----------------")
   print("             Add a new project               ")
-  code = int(input("\nproject code: "))
+  code = int(input("\nEnter project code **'0' to exit : "))
   if code == 0:
     return main()
-  if code > 0:
+  if code > 0 :
     projectEntry.append(code)
   else:
     add_new_project()
@@ -90,22 +90,6 @@ def add_new_project():  # sourcery skip: remove-unreachable-code
   number_of_workers = int(input("number of workers: "))
   projectEntry.append(number_of_workers)
 
-  #     if numOfWorkers > 0 and numOfWorkers <= workers: 
-#         workers = workers - numOfWorkers
-#         projectEntry.append(numOfWorkers)
-#     elif numOfWorkers > 0 and numOfWorkers > workers:
-#         os.system("cls")
-#         print()
-#         print(""" ---------------------XYZ Company---------------------
-              
-#   > Not enough workers to start the project.""")
-#         input()
-#         menu()
-#     else:
-#         print("Invalid input!")
-#         input()
-#         addProject()
-
   project_status = str(input("project status (ongoing, on hold, or completed): "))
   projectEntry.append(project_status)
   
@@ -113,7 +97,7 @@ def add_new_project():  # sourcery skip: remove-unreachable-code
      input("Actual end date (DD/MM/YYYY): ")
 
   # Prompt the user to save the project
-  Save_project = str(input("\nDo you want to save the project (Y/N)?: "))
+  Save_project = str(input("\nDo you want to add the project (Y/N)?: "))
   
   #save the project if user wants to.
   if Save_project == "Y":
@@ -133,7 +117,7 @@ def add_new_project():  # sourcery skip: remove-unreachable-code
    print("The new project has been added.")
    return main()
 
-  if Save_project == ("N"):
+  if Save_project == "N":
    print("An error occured!")
    return main()
     
@@ -145,63 +129,53 @@ def remove_completed_project():
   print("\n----------------XYZ company----------------")
   print("          Remove Completed Project         ")
   project_code = int(input("\nproject code: "))
-  
-  if project_code in ongoingProjects:
+  # Remove the existing project if user wants to.
+  removethe_project = str(input("Do you want to remove the project (Y/N)?:"))
+  if removethe_project == "Y":
+   if project_code in ongoingProjects:
     print(ongoing)
     ongoing[project_code]=[]
     del(ongoingProjects[code])
     print
+    print("press enter key to enter main menu...")
     input(completed)
     return main()
   
-  elif project_code in onholdProjects:
+   elif project_code in onholdProjects:
     print(onhold)
     onhold[project_code]=[]
     del(onholdProjects[code])
     print
+    print("press enter key to enter main menu...")
     input(onhold)
     return main()
+    
   else:
-    print("Invalid input!")
-    input()
-    return remove_completed_project()
-  
-  # Remove the existing project if user wants to.
-  
-  removethe_project = str(input("Do you want to remove the project (Y/N)?:"))
-  if (removethe_project == "Y"):
-      print("The existing project has been removed.")
-  else:
-     print("The project has not been removed.")
-     return main()
+    print("error occured while removing project!")
+    return main()
    
     # 4th figure ICW program
 
-def add_new_workers():
+def add_new_workers():  # sourcery skip: extract-duplicate-method
     # Identify how many workers to add.
-    workers = 0
+    global workers
     print("\n----------------XYZ company----------------")
     print("              Add new workers              ")
     workersto_add = int(input("\nnumber of workers to add ('0' to exit): "))
-    if workersto_add == "0":
+    if workersto_add == '0':
      return main()
-    elif workers():
-     workers += workers
+    elif workersto_add > 0:
+     workersto_add += workersto_add
      print("Workers added succesfully")
+     print("press enter key to enter main menu...")
      input()
      return main()
     else:
-     print ("Invalid input")
+     print ("Not enough workers")
+     print("press enter key to enter main menu...")
      input()
      add_new_workers
      return workersto_add
-    # Prompt the user to add workers or not.
-    wantto_add = str(input("do you want to add (Y/N)?: "))
-    # Add the new workers if the user wants to.
-    if (wantto_add == "Y"):
-        print("New workers have been added.")
-    elif (wantto_add == "N"):
-       print("New workers have not been added.")
 
     # 5th figure ICW program
 
@@ -216,20 +190,69 @@ def update_ongoing_projects():
       ongoing[Project_update_code][0] = Project_update_code
     elif Project_update_code in onholdProjects:
       onhold[Project_update_code][0] = Project_update_code
+    elif Project_update_code in completedProjects:
+      completed[Project_update_code][0] = Project_update_code
     else:
       print ("Project not found!")
       return main()
     
     Client_name = str(input("\nClient name: "))
-    
+    projectEntry.append(Client_name)
+
+    start_date = input("start date (DD/MM/YYYY): ")
+    projectEntry.append(start_date)
+
+    expected_end_date = input("expected end date (DD/MM/YYYY): ")
+    projectEntry.append(expected_end_date)
+
+    number_of_workers = int(input("number of workers: "))
+    projectEntry.append(number_of_workers)
+
+    status = str(input("project status (ongoing, on hold, or completed): "))
+    projectEntry.append(status)
     
     # Prompt the user to update the project details or not.
-    Do_you_want_to_update_details = str(input("\nDo you want to update project details (Y/N)?: "))
+    update_details = str(input("\nDo you want to update project details (Y/N)?: "))
     # Update the ongoing project if the user wants to.
-    if (Do_you_want_to_update_details == "Y"):
-        print("The project has been updated.")
+    if (update_details == "Y"):
+      if status == "ongoing":
+        ongoing[Project_update_code] = projectEntry
+        ongoingProjects.append(Project_update_code)
+        if Project_update_code in completedProjects:
+          completedProjects.remove(Project_update_code)
+          completed[Project_update_code] = []
+        if Project_update_code in onholdProjects:
+          onholdProjects.remove(Project_update_code)
+          onhold[Project_update_code] = []
+          print("The project has been updated.")
+          
+      elif status == "onhold":
+       
+        onhold[Project_update_code] = projectEntry
+        onholdProjects.append(Project_update_code)
+        if Project_update_code in ongoingProjects:
+          ongoingProjects.remove(Project_update_code)
+          ongoing[Project_update_code] = []
+        if Project_update_code in completedProjects:
+          completedProjects.remove(Project_update_code)
+          completed[update_details] = []
+          print("The project has been updated.")
+
+      elif status == "completed":
+       
+        completed[Project_update_code] = projectEntry
+        completedProjects.append(Project_update_code)
+        if Project_update_code in ongoingProjects:
+          ongoingProjects.remove(Project_update_code)
+          ongoing[Project_update_code] = []
+        if Project_update_code in onholdProjects:
+          onholdProjects.remove(Project_update_code)
+          onhold[Project_update_code] = []
+
+          print("The project has been updated.")
     else:
         print("The project is not updated.")
+    return main()
 
     # 6th figure ICW program
 
@@ -238,20 +261,20 @@ def project_statistics():
     print("\n----------------XYZ company----------------")
     print("               Project statistics            ")
     #print the stats
-    print(f"\nNumber of ongoing projects: {len(ongoingProjects)}")
-    print(f"Number of on-hold projects: {len(onholdProjects)}")
-    print(f"Number of complete projects: {len(completedProjects)}")
-    print(f"Number of available workers: {workers}")
+    print(f"\n - Number of ongoing projects: {len(ongoingProjects)}")
+    print(f" - Number of on-hold projects: {len(onholdProjects)}")
+    print(f" - Number of complete projects: {len(completedProjects)}")
+    availableworkers = ("workers - number_of_workers")
+    print(f" - Number of available workers: {workers}")
     # saving the project
-    exit_gate = str(input("\nEnter '0' to exit:"))
+    exit_gate = str(input("\nEnter '0' to exit: "))
     if exit_gate == '0':
       return main()
 
 
 def exit_program():
-    print("      Exiting the program...")
+    print("   Exiting the program...")
     return main()
      
-
 if __name__ == "__main__":
   main()
